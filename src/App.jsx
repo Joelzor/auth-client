@@ -21,12 +21,26 @@ export default function App() {
     const response = await fetch("http://localhost:4000/register", options);
 
     const data = await response.json();
-    setRegisterResponse(data.status);
+    setRegisterResponse(data.user.username);
+    setUser({ username: "", password: "" })
   };
 
   const login = async (e) => {
     e.preventDefault();
-    // Write your login code here
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    }
+    const response = await fetch("http://localhost:4000/login", options);
+
+    const data = await response.json();
+    setLoginResponse(data.access_token);
+    setUser({ username: "", password: "" })
+
   };
 
   // You can safely ignore everything below this line, it's just boilerplate
@@ -67,7 +81,7 @@ export default function App() {
         ]}
       />
 
-      {registerResponse && <p>{registerResponse}</p>}
+      {registerResponse && <p>{registerResponse} was created!</p>}
 
       <h1>Login</h1>
 
