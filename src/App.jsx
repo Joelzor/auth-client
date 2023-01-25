@@ -39,6 +39,7 @@ export default function App() {
 
     const data = await response.json();
     setLoginResponse(data.access_token);
+    localStorage.setItem('access token', data.access_token)
     setUser({ username: "", password: "" })
 
   };
